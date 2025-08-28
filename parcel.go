@@ -48,6 +48,7 @@ func (s ParcelStore) Get(number int) (Parcel, error) {
 	err := row.Scan(&p.Number, &p.Client, &p.Status, &p.Address, &p.CreatedAt)
 	if err != nil {
 		log.Println("не удалось записать данные по параметру number")
+		return Parcel{}, err
 	}
 
 	return p, nil
@@ -61,6 +62,7 @@ func (s ParcelStore) GetByClient(client int) ([]Parcel, error) {
 	rows, err := s.db.Query("SELECT number, client, status, address, created_at from parcel where client = :client", sql.Named("client", client))
 	if err != nil {
 		log.Println("не удалось получить данные по параметру Client")
+		return []Parcel{}, err
 	}
 
 	defer rows.Close()
@@ -94,6 +96,7 @@ func (s ParcelStore) SetStatus(number int, status string) error {
 	_, err := s.db.Exec("UPDATE parcel SET status = :status WHERE number = :number", sql.Named("status", status), sql.Named("number", number))
 	if err != nil {
 		log.Println("не удалось обновить статус по заданному номеру")
+		return err
 	}
 
 	return nil
