@@ -62,6 +62,11 @@ func TestAddGetDelete(t *testing.T) {
 	err = store.Delete(id)
 	require.NoError(t, err)
 	assert.Empty(t, parcel.Number)
+
+	//функция получения
+	_, err = store.Get(parc.Number)
+	//проверяем, что получили ошибку
+	assert.Error(t, err)
 }
 
 // TestSetAddress проверяет обновление адреса
