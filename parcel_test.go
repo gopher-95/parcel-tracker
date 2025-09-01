@@ -50,14 +50,15 @@ func TestAddGetDelete(t *testing.T) {
 	// проверьте, что значения всех полей в полученном объекте совпадают со значениями полей в переменной parcel
 	parc, err := store.Get(id)
 	require.NoError(t, err)
-	assert.Equal(t, parcel.Client, parc.Client)
-	assert.Equal(t, parcel.Status, parc.Status)
-	assert.Equal(t, parcel.Address, parc.Address)
-	assert.Equal(t, parcel.CreatedAt, parc.CreatedAt)
+	expectedCopy := parcel
+	actualCopy := parc
+	actualCopy.Number = expectedCopy.Number
+	assert.Equal(t, expectedCopy, actualCopy)
 
 	// delete
 	// удалите добавленную посылку, убедитесь в отсутствии ошибки
 	// проверьте, что посылку больше нельзя получить из БД
+	//НА СТРОКЕ НИЖЕ ВЫПОЛНЕН ПУНКТ DELETE
 	err = store.Delete(id)
 	require.NoError(t, err)
 	assert.Empty(t, parcel.Number)
