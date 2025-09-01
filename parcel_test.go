@@ -61,10 +61,9 @@ func TestAddGetDelete(t *testing.T) {
 	//НА СТРОКЕ НИЖЕ ВЫПОЛНЕН ПУНКТ DELETE
 	err = store.Delete(id)
 	require.NoError(t, err)
-	assert.Empty(t, parcel.Number)
 
 	//функция получения
-	_, err = store.Get(parc.Number)
+	_, err = store.Get(id)
 	//проверяем, что получили ошибку
 	assert.Error(t, err)
 }
